@@ -179,7 +179,7 @@ System.register(['app/plugins/sdk', 'lodash', 'app/core/utils/kbn', 'app/core/ti
             this.updateTimeRange(); // needed for the first call
 
             var self = this;
-            var params;
+            var params; 
             if (this.params_fn) {
               params = this.params_fn(this);
             }
