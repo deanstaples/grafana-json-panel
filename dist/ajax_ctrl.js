@@ -67,8 +67,8 @@ System.register(['app/plugins/sdk', 'lodash', 'app/core/utils/kbn', 'app/core/ti
       }();
 
       panelDefaults = {
-        method: 'GET',
-        url: 'https://raw.githubusercontent.com/ryantxu/ajax-panel/master/static/example.txt',
+        method: 'POST',
+        url: 'http://localhost:6969',
         errorMode: 'show',
         params_js: "{\n" + " from:ctrl.range.from.format('x'),  // x is unix ms timestamp\n" + " to:ctrl.range.to.format('x'), \n" + " height:ctrl.height\n" + "}",
         display_js: null
@@ -151,12 +151,11 @@ System.register(['app/plugins/sdk', 'lodash', 'app/core/utils/kbn', 'app/core/ti
               }
             }
 
-            this.onRefresh();
+            // this.onRefresh();
           }
         }, {
           key: 'onRefresh',
           value: function onRefresh() {
-            //console.log('refresh', this);
             this.updateTimeRange(); // needed for the first call
 
             var self = this;
@@ -164,22 +163,26 @@ System.register(['app/plugins/sdk', 'lodash', 'app/core/utils/kbn', 'app/core/ti
             if (this.params_fn) {
               params = this.params_fn(this);
             }
-            //console.log( "onRender", this, params );
+            // console.log( "onRender", params );
 
             this.$http({
-              method: this.panel.method,
+              method: "POST",
               url: this.panel.url,
               params: params
             }).then(function successCallback(response) {
               //console.log('success', response, self);
-              var html = response.data;
-              if (self.display_fn) {
-                html = self.display_fn(self, response);
-              }
-              self.updateContent(html);
+              // var html = response.data;
+              // if (self.display_fn) {
+              //   html = self.display_fn(self, response);
+              // }
+              // console.log(response)
+              var body = '<h1>Result</h1> <pre>' + "Status: " + response.data.status + '\n' + "MSG: \n" + response.data.msg + '</pre>'
+              self.updateContent(body);
             }, function errorCallback(response) {
-              console.warn('error', response);
-              var body = '<h1>Error</h1><pre>' + JSON.stringify(response, null, " ") + "</pre>";
+              // console.log('error', response);
+
+              // var body = '<h1>Error</h1><pre>' + JSON.stringify(response , null, " ") + "</pre>";
+              var body = '<h1>Error</h1> <pre>' + "Status: " + response.data.status + '\n' + "MSG: \n" + response.data.msg + '</pre>'
               self.updateContent(body);
             });
           }

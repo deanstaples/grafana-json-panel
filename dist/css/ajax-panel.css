@@ -8,3 +8,8 @@
 .ajax-panel-body {
 	width:100%;
 }
+
+.clear-action{
+	margin-top: 15px;
+	background-color: #e06421;
+}
