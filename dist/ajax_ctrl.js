@@ -125,7 +125,7 @@ System.register(['app/plugins/sdk', 'lodash', 'app/core/utils/kbn', 'app/core/ti
           value: function issueQueries(datasource) {
             this.updateTimeRange();
 
-            console.log('block issueQueries', datasource);
+            // console.log('block issueQueries', datasource);
           }
         }, {
           key: 'onPanelInitalized',
@@ -199,10 +199,14 @@ System.register(['app/plugins/sdk', 'lodash', 'app/core/utils/kbn', 'app/core/ti
               var body = '<h1>Result</h1> <pre>' + "Status: " + response.data.status + '\n' + "MSG: \n" + response.data.msg + '</pre>'
               self.updateContent(body);
             }, function errorCallback(response) {
-              // console.log('error', response);
-
-              // var body = '<h1>Error</h1><pre>' + JSON.stringify(response , null, " ") + "</pre>";
-              var body = '<h1>Error</h1> <pre>' + "Status: " + response.data.status + '\n' + "MSG: \n" + response.data.msg + '</pre>'
+              console.log('error', response);
+              var body = ""
+              if (response.data != null){
+                body = '<h1>Error</h1> <pre>' + "Status: " + response.data.status + '\n' + "MSG: \n" + response.data.msg + '</pre>'  
+              }else{
+                body = "Error request to api, contact admin for more details"
+              }
+              
               self.updateContent(body);
             });
           }
@@ -212,8 +216,8 @@ System.register(['app/plugins/sdk', 'lodash', 'app/core/utils/kbn', 'app/core/ti
             var product = this.panel.product
             var url = productMap[product];
             this.panel.url = apiurl + url;
-            console.log("product: ", product)
-            console.log("api link: ", this.panel.url)
+            // console.log("product: ", product)
+            // console.log("api link: ", this.panel.url)
           }
         }, {
           key: 'updateContent',
@@ -221,7 +225,7 @@ System.register(['app/plugins/sdk', 'lodash', 'app/core/utils/kbn', 'app/core/ti
             try {
               this.content = this.$sce.trustAsHtml(this.templateSrv.replace(html, this.panel.scopedVars));
             } catch (e) {
-              console.log('Text panel error: ', e);
+              // console.log('Text panel error: ', e);
               this.content = this.$sce.trustAsHtml(html);
             }
           }
