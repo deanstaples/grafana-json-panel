@@ -4,7 +4,27 @@ System.register(['app/plugins/sdk', 'lodash', 'app/core/utils/kbn', 'app/core/ti
   "use strict";
 
   var MetricsPanelCtrl, _, kbn, TimeSeries, moment, _createClass, panelDefaults, AjaxCtrl;
-
+  var apiurl = "http://localhost:6969";
+  var productMap = {
+        'baomoiapisoccer': '/baomoiapisoccer',
+    'epi_baomoi': '/epi/baomoi',
+    'epi_baomoi_v2': '/epi/baomoi_v2',
+    'epi_cms': '/epi/cms',
+    'epi_static_baomoi': '/epi/static_baomoi',
+    'epi_static_baomoi_v2': '/epi/static_baomoi_v2',
+    'epi_static_cms': '/epi/static_cms',
+    'farm_a1': '/ztv',    
+    'g2main': '/g2/main',    
+    'g2mix': '/g2/mix',    
+    'img_znews': '/imgnews',    
+    'mp3_mobile_api_cache': '/mp3/mobile_api',    
+    'mp3_web_cache': '/mp3/web',    
+    'news': '/news',
+    'trithuctruyen': '/news',
+    'zaloapi': '/zalo/api',
+    'zaloavatar': '/zalo/avatar',
+    'ztv_cache_nologin': '/ztvfrontend/cache_nologin'
+  }
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
       throw new TypeError("Cannot call a class as a function");
@@ -185,6 +205,15 @@ System.register(['app/plugins/sdk', 'lodash', 'app/core/utils/kbn', 'app/core/ti
               var body = '<h1>Error</h1> <pre>' + "Status: " + response.data.status + '\n' + "MSG: \n" + response.data.msg + '</pre>'
               self.updateContent(body);
             });
+          }
+        }, {
+          key: "refreshUrl",
+          value: function refreshUrl(){
+            var product = this.panel.product
+            var url = productMap[product];
+            this.panel.url = apiurl + url;
+            console.log("product: ", product)
+            console.log("api link: ", this.panel.url)
           }
         }, {
           key: 'updateContent',
