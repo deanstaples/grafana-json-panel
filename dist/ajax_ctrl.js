@@ -183,6 +183,8 @@ System.register(['app/plugins/sdk', 'lodash', 'app/core/utils/kbn', 'app/core/ti
             if (this.params_fn) {
               params = this.params_fn(this);
             }
+            //Duplicate:
+            params['link_arr'] = params['linkArr']
             // console.log( "onRender", params );
 
             this.$http({
