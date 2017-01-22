@@ -6,24 +6,78 @@ System.register(['app/plugins/sdk', 'lodash', 'app/core/utils/kbn', 'app/core/ti
   var MetricsPanelCtrl, _, kbn, TimeSeries, moment, _createClass, panelDefaults, AjaxCtrl;
   var apiurl = "http://localhost:6969";
   var productMap = {
-        'baomoiapisoccer': '/baomoiapisoccer',
-    'epi_baomoi': '/epi/baomoi',
-    'epi_baomoi_v2': '/epi/baomoi_v2',
-    'epi_cms': '/epi/cms',
-    'epi_static_baomoi': '/epi/static_baomoi',
-    'epi_static_baomoi_v2': '/epi/static_baomoi_v2',
-    'epi_static_cms': '/epi/static_cms',
-    'farm_a1': '/ztv',    
-    'g2main': '/g2/main',    
-    'g2mix': '/g2/mix',    
-    'img_znews': '/imgnews',    
-    'mp3_mobile_api_cache': '/mp3/mobile_api',    
-    'mp3_web_cache': '/mp3/web',    
-    'news': '/news',
-    'trithuctruyen': '/news',
-    'zaloapi': '/zalo/api',
-    'zaloavatar': '/zalo/avatar',
-    'ztv_cache_nologin': '/ztvfrontend/cache_nologin'
+      'baomoiapisoccer': {
+        'url' : '/baomoiapisoccer',
+        'secret_key': 'a5sDG2stAtiC'
+      },
+      'epi_baomoi': {
+        'url' : '/epi/baomoi',
+        'secret_key': 'iGhefr3itioghao7aegh'
+      },
+      'epi_baomoi_v2': {
+        'url' : '/epi/baomoi_v2',
+        'secret_key': 'iGhefr3itioghao7aegh'
+      },
+      'epi_cms': {
+        'url': '/epi/cms',
+        'secret_key': 'iGhefr3itioghao7aegh'
+      },
+      'epi_static_baomoi': {
+        'url': '/epi/static_baomoi',
+        'secret_key': 'iGhefr3itioghao7aegh'
+      },
+      'epi_static_baomoi_v2': {
+        'url': '/epi/static_baomoi_v2',
+        'secret_key': 'iGhefr3itioghao7aegh'
+      },
+      'epi_static_cms': {
+        'url': '/epi/static_cms',
+        'secret_key': 'iGhefr3itioghao7aegh'
+      },
+      'farm_a1': {
+        'url': '/ztv',    
+        'secret_key': 'abcDADdr4a'
+      },
+      'g2main': {
+        'url': '/g2/main',    
+        'secret_key': 'a5sDG2stAtiC'
+      },
+      'g2mix': {
+        'url': '/g2/mix',    
+        'secret_key': 'a5sDG2stAtiC'
+      },
+      'img_znews': {
+        'url': '/imgnews',    
+        'secret_key': 'a5sDG2stAtiC'
+      },
+      'mp3_mobile_api_cache': {
+        'url': '/mp3/mobile_api',    
+        'secret_key': 'ahdaeduinei4Ohquohk0'
+      },
+      'mp3_web_cache': {
+        'url': '/mp3/web',    
+        'secret_key': 'ahdaeduinei4Ohquohk0'
+      },
+      'news': {
+        'url': '/news',
+        'secret_key': 'abcDADdr4a'
+      },
+      'trithuctruyen': {
+        'url': '/news',
+        'secret_key': ''
+      },
+      'zaloapi': {
+        'url': '/zalo/api',
+        'secret_key': 'ahdaeduinei4Ohquohk0'
+      },
+      'zaloavatar': {
+        'url': '/zalo/avatar',
+        'secret_key': 'ahdaeduinei4Ohquohk0'
+      },
+      'ztv_cache_nologin': {
+        'url': '/ztvfrontend/cache_nologin',
+        'secret_key': 'abcDADdr4a'
+      }
   }
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -87,11 +141,11 @@ System.register(['app/plugins/sdk', 'lodash', 'app/core/utils/kbn', 'app/core/ti
       }();
 
       panelDefaults = {
-        method: 'POST',
-        url: 'http://localhost:6969',
-        errorMode: 'show',
-        params_js: "{\n" + " from:ctrl.range.from.format('x'),  // x is unix ms timestamp\n" + " to:ctrl.range.to.format('x'), \n" + " height:ctrl.height\n" + "}",
-        display_js: null
+        // method: 'POST',
+        // url: 'http://localhost:6969',
+        // errorMode: 'show',
+        // params_js: "{\n" + " from:ctrl.range.from.format('x'),  // x is unix ms timestamp\n" + " to:ctrl.range.to.format('x'), \n" + " height:ctrl.height\n" + "}",
+        // display_js: null
       };
 
       _export('AjaxCtrl', AjaxCtrl = function (_MetricsPanelCtrl) {
@@ -152,24 +206,24 @@ System.register(['app/plugins/sdk', 'lodash', 'app/core/utils/kbn', 'app/core/ti
             this.params_fn = null;
             this.display_fn = null;
 
-            if (this.panel.params_js) {
-              try {
-                this.params_fn = new Function('ctrl', 'return ' + this.panel.params_js);
-              } catch (ex) {
-                console.warn('error parsing params_js', this.panel.params_js, ex);
-                this.params_fn = null;
-              }
-            }
+            // if (this.panel.params_js) {
+            //   try {
+            //     this.params_fn = new Function('ctrl', 'return ' + this.panel.params_js);
+            //   } catch (ex) {
+            //     console.warn('error parsing params_js', this.panel.params_js, ex);
+            //     this.params_fn = null;
+            //   }
+            // }
 
             // NOTE, this is not exposed yet
-            if (this.panel.display_js) {
-              try {
-                this.display_fn = new Function('ctrl', 'response', this.panel.display_js);
-              } catch (ex) {
-                console.warn('error parsing display_js', this.panel.display_js, ex);
-                this.display_fn = null;
-              }
-            }
+            // if (this.panel.display_js) {
+            //   try {
+            //     this.display_fn = new Function('ctrl', 'response', this.panel.display_js);
+            //   } catch (ex) {
+            //     console.warn('error parsing display_js', this.panel.display_js, ex);
+            //     this.display_fn = null;
+            //   }
+            // }
 
             // this.onRefresh();
           }
@@ -177,15 +231,16 @@ System.register(['app/plugins/sdk', 'lodash', 'app/core/utils/kbn', 'app/core/ti
           key: 'onRefresh',
           value: function onRefresh() {
             this.updateTimeRange(); // needed for the first call
-
             var self = this;
-            var params; 
-            if (this.params_fn) {
-              params = this.params_fn(this);
-            }
+            var product = this.panel.product;
+            var params = {
+                  link_addr: this.panel.params_js,
+                  linkArr: this.panel.params_js,
+                  secret_key: productMap[product].secret_key,
+                  debug: 1
+            }; 
+            // console.log(params)
             //Duplicate:
-            params['link_arr'] = params['linkArr']
-            // console.log( "onRender", params );
 
             this.$http({
               method: "POST",
