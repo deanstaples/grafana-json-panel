@@ -253,13 +253,13 @@ System.register(['app/plugins/sdk', 'lodash', 'app/core/utils/kbn', 'app/core/ti
               //   html = self.display_fn(self, response);
               // }
               // console.log(response)
-              var body = '<h1>Result</h1> <pre>' + "Status: " + response.data.status + '\n' + "MSG: \n" + response.data.msg + '</pre>'
+              var body = '<h1>Result</h1> <pre>' + "Status: " + response.data.status + '\n' + "MSG: \n" + response.data.msg.replace(/<head>/g, "<_head>").replace(/<meta/g, "<_meta") + '</pre>'
               self.updateContent(body);
             }, function errorCallback(response) {
               console.log('error', response);
               var body = ""
               if (response.data != null){
-                body = '<h1>Error</h1> <pre>' + "Status: " + response.data.status + '\n' + "MSG: \n" + response.data.msg + '</pre>'  
+                body = '<h1>Error</h1> <pre>' + "Status: " + response.data.status + '\n' + "MSG: \n" + response.data.msg.replace(/<head>/g, "<_head>").replace(/<meta/g, "<_meta") + '</pre>'  
               }else{
                 body = "Error request to api, contact admin for more details"
               }
