@@ -166,7 +166,7 @@ System.register(['app/plugins/sdk', 'lodash', 'app/core/utils/kbn', 'app/core/ti
 
           _this.events.on('init-edit-mode', _this.onInitEditMode.bind(_this));
           _this.events.on('panel-initialized', _this.onPanelInitalized.bind(_this));
-          _this.events.on('refresh', _this.onRefresh.bind(_this));
+          // _this.events.on('refresh', _this.onRefresh.bind(_this));
           _this.events.on('render', _this.onRender.bind(_this));
           return _this;
         }
@@ -271,7 +271,7 @@ System.register(['app/plugins/sdk', 'lodash', 'app/core/utils/kbn', 'app/core/ti
           key: "refreshUrl",
           value: function refreshUrl(){
             var product = this.panel.product
-            var url = productMap[product];
+            var url = productMap[product].url;
             this.panel.url = apiurl + url;
             // console.log("product: ", product)
             // console.log("api link: ", this.panel.url)
