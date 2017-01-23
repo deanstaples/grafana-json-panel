@@ -234,7 +234,7 @@ System.register(['app/plugins/sdk', 'lodash', 'app/core/utils/kbn', 'app/core/ti
             var self = this;
             var product = this.panel.product;
             var params = {
-                  link_addr: this.panel.params_js,
+                  link_arr: this.panel.params_js,
                   linkArr: this.panel.params_js,
                   secret_key: productMap[product].secret_key,
                   debug: 1
