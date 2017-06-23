@@ -6,7 +6,7 @@ import './css/ajax-panel.css!';
 
 const panelDefaults = {
   method: 'GET',
-  url: 'https://raw.githubusercontent.com/ryantxu/ajax-panel/master/static/example.txt',
+  url: 'https://raw.githubusercontent.com/deanstaples/grafana-json-panel/master/static/example.txt',
   errorMode: 'show',
   params_js: "{\n" +
              " from:ctrl.range.from.format('x'),  // x is unix ms timestamp\n" +
@@ -34,11 +34,9 @@ export class AjaxCtrl extends MetricsPanelCtrl {
     this.events.on('render', this.onRender.bind(this));
   }
 
-  // This just skips trying to send the actual query.  perhaps there is a better way
   issueQueries(datasource) {
     this.updateTimeRange();
-
-    console.log('block issueQueries', datasource);
+    //console.log('block issueQueries', datasource);
   }
 
   onPanelInitalized() {
@@ -60,7 +58,7 @@ export class AjaxCtrl extends MetricsPanelCtrl {
   updateFN() {
     this.params_fn = null;
     this.display_fn = null;
-
+    
     if(this.panel.params_js) {
       try {
         this.params_fn = new Function('ctrl', 'return ' + this.panel.params_js);
@@ -104,7 +102,7 @@ export class AjaxCtrl extends MetricsPanelCtrl {
       params = this.params_fn( this );
     }
     //console.log( "onRender", this, params );
-
+    self.$scope.ctrl.loading = true;
     this.$http({
       method: this.panel.method,
       url: this.panel.url,
@@ -114,14 +112,15 @@ export class AjaxCtrl extends MetricsPanelCtrl {
       if(self.display_fn) {
         html = self.display_fn(self, response);
       }
+      self.$scope.ctrl.loading = false;
       self.updateContent( html );
     }, function errorCallback(response) {
       console.warn('error', response);
       var body = '<h1>Error</h1><pre>' + JSON.stringify(response, null, " ") + "</pre>";
+      self.$scope.ctrl.loading = false;
       self.updateContent(body);
     });
-
-
+    
   }
 
   updateContent(html) {

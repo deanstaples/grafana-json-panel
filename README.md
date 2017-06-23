@@ -1,7 +1,6 @@
 ## AJAX Panel for Grafana
 
-The AJAX Panel can load external content into the dashboard.  This is a more powerful and flexible solution than
-using an <iframe 
+The AJAX Panel can load external content into the dashboard.
 
 
 ### Options
@@ -35,6 +34,10 @@ using an <iframe
 
 #### Changelog
 
+##### v0.1.0
+
+- Allowed the ability to run js against the ajax response.
+
 ##### v0.0.2
 
 - Quick and Dirty, but it works!
@@ -54,4 +57,3 @@ using an <iframe
  - Load CSS file?
  - configure javascript for display
  - why does the `Time range` > `Override relative time` not work?
- - Check that parameters have changed before sending a new request
