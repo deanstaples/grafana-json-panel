@@ -13,25 +13,19 @@
 	</div>
 
 	<div style="margin-top:10px;">
-		<h5 class="section-heading">Parameters (via javascript)</h5>
+		<h5 class="section-heading">POST Parameters (via javascript)</h5>
 		<textarea class="gf-form-input" autocorrect="off" spellcheck="false" autocapitalize="off"
 		  ng-model="ctrl.panel.params_js" rows="5" style="width:100%" 
 		  ng-change="ctrl.updateFN()" 
 		  ng-model-onblur>
 		</textarea>
 	</div>
-
-  <div style="margin-top:10px;">
-		<h5 class="section-heading">JSON field to display</h5>
-		<input type="text" style="width:100%" autocorrect="off" spellcheck="false" autocapitalize="off" length="30"
-			ng-model="ctrl.panel.json_field" 
-			ng-change="ctrl.updateFN()"
-		  ng-model-onblur 
-		 />
-	</div>
    
 	<div style="margin-top:10px;">
 		<h5 class="section-heading">Display (via javascript)</h5>
+		<p>ie:
+			return "&lt;p&gt;" + response.data.JSONFIELD + "&lt;/p&gt;"
+		</p>
 		<textarea class="gf-form-input" autocorrect="off" spellcheck="false" autocapitalize="off"
 		  ng-model="ctrl.panel.display_js" rows="8" style="width:100%" 
 		  ng-change="ctrl.updateFN()" 

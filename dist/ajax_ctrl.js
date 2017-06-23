@@ -151,7 +151,7 @@ System.register(['app/plugins/sdk', 'lodash', 'app/core/utils/kbn', 'app/core/ti
 
             if (this.panel.json_field) {
               try {
-                this.json_field_fn = new Function('ctrl', 'response', this.panel.json_field);
+                this.json_field_fn = new Function('ctrl', 'return', this.panel.json_field);
               } catch (ex) {
                 console.warn('error parsing json_field', this.panel.json_field, ex);
                 this.json_field_fn = null;
@@ -201,9 +201,7 @@ System.register(['app/plugins/sdk', 'lodash', 'app/core/utils/kbn', 'app/core/ti
           }
         }, {
           key: 'onRender',
-          value: function onRender() {
-            //console.log('render', this);
-          }
+          value: function onRender() {}
         }]);
 
         return AjaxCtrl;

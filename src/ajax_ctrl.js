@@ -84,7 +84,7 @@ export class AjaxCtrl extends MetricsPanelCtrl {
 
     if(this.panel.json_field) {
       try {
-        this.json_field_fn = new Function('ctrl', 'response', this.panel.json_field);
+        this.json_field_fn = new Function('ctrl', 'return', this.panel.json_field);
       }
       catch( ex ) {
         console.warn('error parsing json_field', this.panel.json_field, ex );
@@ -135,7 +135,6 @@ export class AjaxCtrl extends MetricsPanelCtrl {
   }
 
   onRender() {
-    //console.log('render', this);
   }
 }
 
