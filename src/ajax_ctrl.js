@@ -13,8 +13,7 @@ const panelDefaults = {
              " to:ctrl.range.to.format('x'), \n" +
              " height:ctrl.height\n" +
              "}",
-  json_field: "data",
-  display_js: null
+  display_js: 'return response.data;'
 };
 
 export class AjaxCtrl extends MetricsPanelCtrl {

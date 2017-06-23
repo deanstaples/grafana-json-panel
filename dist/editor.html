@@ -20,12 +20,10 @@
 		  ng-model-onblur>
 		</textarea>
 	</div>
-   
+  
 	<div style="margin-top:10px;">
-		<h5 class="section-heading">Display (via javascript)</h5>
-		<p>ie:
-			return "&lt;p&gt;" + response.data.JSONFIELD + "&lt;/p&gt;"
-		</p>
+		<h5 class="section-heading">Display (via javascript) eg:</h5>
+		<pre><code>return "&lt;center&gt;&lt;p&gt;" + response.data.JSONFIELD + "&lt;/p&gt;&lt;center&gt;";</code></pre>
 		<textarea class="gf-form-input" autocorrect="off" spellcheck="false" autocapitalize="off"
 		  ng-model="ctrl.panel.display_js" rows="8" style="width:100%" 
 		  ng-change="ctrl.updateFN()" 

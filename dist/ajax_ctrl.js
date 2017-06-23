@@ -69,8 +69,7 @@ System.register(['app/plugins/sdk', 'lodash', 'app/core/utils/kbn', 'app/core/ti
         url: 'https://raw.githubusercontent.com/ryantxu/ajax-panel/master/static/example.txt',
         errorMode: 'show',
         params_js: "{\n" + " from:ctrl.range.from.format('x'),  // x is unix ms timestamp\n" + " to:ctrl.range.to.format('x'), \n" + " height:ctrl.height\n" + "}",
-        json_field: "data",
-        display_js: null
+        display_js: 'return response.data;'
       };
 
       _export('AjaxCtrl', AjaxCtrl = function (_MetricsPanelCtrl) {
