@@ -2,7 +2,6 @@ import {MetricsPanelCtrl} from 'app/plugins/sdk';
 import _ from 'lodash';
 import kbn from 'app/core/utils/kbn';
 import TimeSeries from 'app/core/time_series';
-import moment from 'moment';
 import './css/ajax-panel.css!';
 
 const panelDefaults = {
@@ -14,6 +13,7 @@ const panelDefaults = {
              " to:ctrl.range.to.format('x'), \n" +
              " height:ctrl.height\n" +
              "}",
+  json_field: "data",
   display_js: null
 };
 
@@ -72,7 +72,6 @@ export class AjaxCtrl extends MetricsPanelCtrl {
       }
     }
 
-    // NOTE, this is not exposed yet
     if(this.panel.display_js) {
       try {
         this.display_fn = new Function('ctrl', 'response', this.panel.display_js);
@@ -80,6 +79,16 @@ export class AjaxCtrl extends MetricsPanelCtrl {
       catch( ex ) {
         console.warn('error parsing display_js', this.panel.display_js, ex );
         this.display_fn = null;
+      }
+    }
+
+    if(this.panel.json_field) {
+      try {
+        this.json_field_fn = new Function('ctrl', 'response', this.panel.json_field);
+      }
+      catch( ex ) {
+        console.warn('error parsing json_field', this.panel.json_field, ex );
+        this.json_field_fn = null;
       }
     }
 
@@ -102,7 +111,6 @@ export class AjaxCtrl extends MetricsPanelCtrl {
       url: this.panel.url,
       params: params
     }).then(function successCallback(response) {
-      //console.log('success', response, self);
       var html = response.data;
       if(self.display_fn) {
         html = self.display_fn(self, response);

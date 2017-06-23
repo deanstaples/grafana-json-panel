@@ -1,84 +1,10 @@
 'use strict';
 
-System.register(['app/plugins/sdk', 'lodash', 'app/core/utils/kbn', 'app/core/time_series', 'moment', './css/ajax-panel.css!'], function (_export, _context) {
+System.register(['app/plugins/sdk', 'lodash', 'app/core/utils/kbn', 'app/core/time_series', './css/ajax-panel.css!'], function (_export, _context) {
   "use strict";
 
-  var MetricsPanelCtrl, _, kbn, TimeSeries, moment, _createClass, panelDefaults, AjaxCtrl;
-  var apiurl = "http://localhost:6969";
-  var productMap = {
-      'baomoiapisoccer': {
-        'url' : '/baomoiapisoccer',
-        'secret_key': 'a5sDG2stAtiC'
-      },
-      'epi_baomoi': {
-        'url' : '/epi/baomoi',
-        'secret_key': 'iGhefr3itioghao7aegh'
-      },
-      'epi_baomoi_v2': {
-        'url' : '/epi/baomoi_v2',
-        'secret_key': 'iGhefr3itioghao7aegh'
-      },
-      'epi_cms': {
-        'url': '/epi/cms',
-        'secret_key': 'iGhefr3itioghao7aegh'
-      },
-      'epi_static_baomoi': {
-        'url': '/epi/static_baomoi',
-        'secret_key': 'iGhefr3itioghao7aegh'
-      },
-      'epi_static_baomoi_v2': {
-        'url': '/epi/static_baomoi_v2',
-        'secret_key': 'iGhefr3itioghao7aegh'
-      },
-      'epi_static_cms': {
-        'url': '/epi/static_cms',
-        'secret_key': 'iGhefr3itioghao7aegh'
-      },
-      'farm_a1': {
-        'url': '/ztv',    
-        'secret_key': 'abcDADdr4a'
-      },
-      'g2main': {
-        'url': '/g2/main',    
-        'secret_key': 'a5sDG2stAtiC'
-      },
-      'g2mix': {
-        'url': '/g2/mix',    
-        'secret_key': 'a5sDG2stAtiC'
-      },
-      'img_znews': {
-        'url': '/imgnews',    
-        'secret_key': 'a5sDG2stAtiC'
-      },
-      'mp3_mobile_api_cache': {
-        'url': '/mp3/mobile_api',    
-        'secret_key': 'ahdaeduinei4Ohquohk0'
-      },
-      'mp3_web_cache': {
-        'url': '/mp3/web',    
-        'secret_key': 'ahdaeduinei4Ohquohk0'
-      },
-      'news': {
-        'url': '/news',
-        'secret_key': 'abcDADdr4a'
-      },
-      'trithuctruyen': {
-        'url': '/news',
-        'secret_key': ''
-      },
-      'zaloapi': {
-        'url': '/zalo/api',
-        'secret_key': 'ahdaeduinei4Ohquohk0'
-      },
-      'zaloavatar': {
-        'url': '/zalo/avatar',
-        'secret_key': 'ahdaeduinei4Ohquohk0'
-      },
-      'ztv_cache_nologin': {
-        'url': '/ztvfrontend/cache_nologin',
-        'secret_key': 'abcDADdr4a'
-      }
-  }
+  var MetricsPanelCtrl, _, kbn, TimeSeries, _createClass, panelDefaults, AjaxCtrl;
+
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
       throw new TypeError("Cannot call a class as a function");
@@ -118,8 +44,6 @@ System.register(['app/plugins/sdk', 'lodash', 'app/core/utils/kbn', 'app/core/ti
       kbn = _appCoreUtilsKbn.default;
     }, function (_appCoreTime_series) {
       TimeSeries = _appCoreTime_series.default;
-    }, function (_moment) {
-      moment = _moment.default;
     }, function (_cssAjaxPanelCss) {}],
     execute: function () {
       _createClass = function () {
@@ -141,11 +65,12 @@ System.register(['app/plugins/sdk', 'lodash', 'app/core/utils/kbn', 'app/core/ti
       }();
 
       panelDefaults = {
-        // method: 'POST',
-        // url: 'http://localhost:6969',
-        // errorMode: 'show',
-        // params_js: "{\n" + " from:ctrl.range.from.format('x'),  // x is unix ms timestamp\n" + " to:ctrl.range.to.format('x'), \n" + " height:ctrl.height\n" + "}",
-        // display_js: null
+        method: 'GET',
+        url: 'https://raw.githubusercontent.com/ryantxu/ajax-panel/master/static/example.txt',
+        errorMode: 'show',
+        params_js: "{\n" + " from:ctrl.range.from.format('x'),  // x is unix ms timestamp\n" + " to:ctrl.range.to.format('x'), \n" + " height:ctrl.height\n" + "}",
+        json_field: "data",
+        display_js: null
       };
 
       _export('AjaxCtrl', AjaxCtrl = function (_MetricsPanelCtrl) {
@@ -166,7 +91,7 @@ System.register(['app/plugins/sdk', 'lodash', 'app/core/utils/kbn', 'app/core/ti
 
           _this.events.on('init-edit-mode', _this.onInitEditMode.bind(_this));
           _this.events.on('panel-initialized', _this.onPanelInitalized.bind(_this));
-          // _this.events.on('refresh', _this.onRefresh.bind(_this));
+          _this.events.on('refresh', _this.onRefresh.bind(_this));
           _this.events.on('render', _this.onRender.bind(_this));
           return _this;
         }
@@ -179,7 +104,7 @@ System.register(['app/plugins/sdk', 'lodash', 'app/core/utils/kbn', 'app/core/ti
           value: function issueQueries(datasource) {
             this.updateTimeRange();
 
-            // console.log('block issueQueries', datasource);
+            console.log('block issueQueries', datasource);
           }
         }, {
           key: 'onPanelInitalized',
@@ -206,75 +131,63 @@ System.register(['app/plugins/sdk', 'lodash', 'app/core/utils/kbn', 'app/core/ti
             this.params_fn = null;
             this.display_fn = null;
 
-            // if (this.panel.params_js) {
-            //   try {
-            //     this.params_fn = new Function('ctrl', 'return ' + this.panel.params_js);
-            //   } catch (ex) {
-            //     console.warn('error parsing params_js', this.panel.params_js, ex);
-            //     this.params_fn = null;
-            //   }
-            // }
+            if (this.panel.params_js) {
+              try {
+                this.params_fn = new Function('ctrl', 'return ' + this.panel.params_js);
+              } catch (ex) {
+                console.warn('error parsing params_js', this.panel.params_js, ex);
+                this.params_fn = null;
+              }
+            }
 
-            // NOTE, this is not exposed yet
-            // if (this.panel.display_js) {
-            //   try {
-            //     this.display_fn = new Function('ctrl', 'response', this.panel.display_js);
-            //   } catch (ex) {
-            //     console.warn('error parsing display_js', this.panel.display_js, ex);
-            //     this.display_fn = null;
-            //   }
-            // }
+            if (this.panel.display_js) {
+              try {
+                this.display_fn = new Function('ctrl', 'response', this.panel.display_js);
+              } catch (ex) {
+                console.warn('error parsing display_js', this.panel.display_js, ex);
+                this.display_fn = null;
+              }
+            }
 
-            // this.onRefresh();
+            if (this.panel.json_field) {
+              try {
+                this.json_field_fn = new Function('ctrl', 'response', this.panel.json_field);
+              } catch (ex) {
+                console.warn('error parsing json_field', this.panel.json_field, ex);
+                this.json_field_fn = null;
+              }
+            }
+
+            this.onRefresh();
           }
         }, {
           key: 'onRefresh',
           value: function onRefresh() {
+            //console.log('refresh', this);
             this.updateTimeRange(); // needed for the first call
+
             var self = this;
-            var product = this.panel.product;
-            var params = {
-                  link_arr: this.panel.params_js,
-                  linkArr: this.panel.params_js,
-                  secret_key: productMap[product].secret_key,
-                  debug: 1
-            }; 
-            // console.log(params)
-            //Duplicate:
+            var params;
+            if (this.params_fn) {
+              params = this.params_fn(this);
+            }
+            //console.log( "onRender", this, params );
 
             this.$http({
-              method: "POST",
+              method: this.panel.method,
               url: this.panel.url,
               params: params
             }).then(function successCallback(response) {
-              //console.log('success', response, self);
-              // var html = response.data;
-              // if (self.display_fn) {
-              //   html = self.display_fn(self, response);
-              // }
-              // console.log(response)
-              var body = '<h1>Result</h1> <pre>' + "Status: " + response.data.status + '\n' + "MSG: \n" + response.data.msg.replace(/<head>/g, "<_head>").replace(/<meta/g, "<_meta") + '</pre>'
-              self.updateContent(body);
-            }, function errorCallback(response) {
-              console.log('error', response);
-              var body = ""
-              if (response.data != null){
-                body = '<h1>Error</h1> <pre>' + "Status: " + response.data.status + '\n' + "MSG: \n" + response.data.msg.replace(/<head>/g, "<_head>").replace(/<meta/g, "<_meta") + '</pre>'  
-              }else{
-                body = "Error request to api, contact admin for more details"
+              var html = response.data;
+              if (self.display_fn) {
+                html = self.display_fn(self, response);
               }
-              
+              self.updateContent(html);
+            }, function errorCallback(response) {
+              console.warn('error', response);
+              var body = '<h1>Error</h1><pre>' + JSON.stringify(response, null, " ") + "</pre>";
               self.updateContent(body);
             });
-          }
-        }, {
-          key: "refreshUrl",
-          value: function refreshUrl(){
-            var product = this.panel.product
-            var url = productMap[product].url;
-            this.panel.url = apiurl + url;
-            // console.log("product: ", product)
-            // console.log("api link: ", this.panel.url)
           }
         }, {
           key: 'updateContent',
@@ -282,7 +195,7 @@ System.register(['app/plugins/sdk', 'lodash', 'app/core/utils/kbn', 'app/core/ti
             try {
               this.content = this.$sce.trustAsHtml(this.templateSrv.replace(html, this.panel.scopedVars));
             } catch (e) {
-              // console.log('Text panel error: ', e);
+              console.log('Text panel error: ', e);
               this.content = this.$sce.trustAsHtml(html);
             }
           }

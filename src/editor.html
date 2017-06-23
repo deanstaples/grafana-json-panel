@@ -21,7 +21,15 @@
 		</textarea>
 	</div>
 
-<!--
+  <div style="margin-top:10px;">
+		<h5 class="section-heading">JSON field to display</h5>
+		<input type="text" style="width:100%" autocorrect="off" spellcheck="false" autocapitalize="off" length="30"
+			ng-model="ctrl.panel.json_field" 
+			ng-change="ctrl.updateFN()"
+		  ng-model-onblur 
+		 />
+	</div>
+   
 	<div style="margin-top:10px;">
 		<h5 class="section-heading">Display (via javascript)</h5>
 		<textarea class="gf-form-input" autocorrect="off" spellcheck="false" autocapitalize="off"
@@ -30,6 +38,4 @@
 		  ng-model-onblur>
 		</textarea>
 	</div>
--->
-
 </div>
